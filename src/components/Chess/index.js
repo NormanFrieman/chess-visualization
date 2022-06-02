@@ -2,9 +2,9 @@ import { Chessboard } from 'react-chessboard';
 import { Chess } from 'chess.js';
 import { useState } from 'react';
 import useSound from 'use-sound';
-import move_sound from './assets/move-sound.mp3';
+import move_sound from '../../assets/move-sound.mp3';
 
-function Chessgame() {
+function ChessComponent() {
     const [game, setGame] = useState(new Chess());
     const [squaresStyles, setSquaresStyles] = useState({});
     const [moveSound] = useSound(move_sound);
@@ -79,4 +79,4 @@ function Chessgame() {
     )
 }
 
-export default Chessgame;
+export default ChessComponent;

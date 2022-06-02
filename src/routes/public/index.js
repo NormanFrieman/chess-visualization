@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Chessgame from "./Chessgame";
+import Dashboard from "../../pages/Dashboard";
 
-export default function RouteConfig(){
+export default function PublicRoutes(){
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Chessgame/>}/>
+                <Route path="/" element={<Dashboard/>}/>
             </Routes>
         </BrowserRouter>
     )
