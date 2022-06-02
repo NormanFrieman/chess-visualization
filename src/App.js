@@ -1,9 +1,14 @@
 import React from "react";
-import RouteConfig from "./routes";
+import RoutesConfig from './routes/routes';
+import Header from './views/Header';
+import './App.css';
 
 function App() {
     return (
-        <RouteConfig/>
+        <div>
+            <Header />
+            <RoutesConfig/>
+        </div>
     );
 }
 
