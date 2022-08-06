@@ -1,0 +1,11 @@
+.container {
+    width: 100%;
+}
+
+.chessgame_normal {
+    display: block;
+}
+
+.chessgame_blind{
+    display: none;
+}
