@@ -5,6 +5,7 @@ import useSound from 'use-sound';
 import move_sound from '../../assets/move-sound.mp3';
 
 import emptyImg from '../../assets/empty-img.png';
+import piecesImg from '../../helpers/piecesImg';
 
 import './style.css';
 
@@ -32,19 +33,42 @@ const normalPieces = {};
 const blindPieces = BlindPieces();
 
 function ChessComponent(data) {
-    const [game, setGame] = useState(new Chess());
+    const [game, setGame] = useState(new Chess(data.fen));
     const [squaresStyles, setSquaresStyles] = useState({});
     const [moveSound] = useSound(move_sound);
 
     const [piecesShow, setPiecesShow] = useState(true);
+    
+    const [piecesLocation, setPiecesLocation] = useState([]);
 
+    // Define se deve exibir ou não as peças no tabuleiro
     useEffect(() => {
         if(data.showPieces){
             setPiecesShow(true);
         }else{
             setPiecesShow(false);
         }
-    }, [piecesShow, data]);
+    }, [game, piecesShow, data]);
+
+    // Salva a posição das peças
+    useEffect(() => {
+        const board = game.board();
+        const newPiecesLocalition = [];
+
+        board.forEach(column => {
+            column.forEach(piece => {
+                if(!piece)
+                    return;
+                
+                newPiecesLocalition.push({
+                    ...piece,
+                    img: piecesImg[piece.type + piece.color]
+                });
+            })
+        })
+
+        setPiecesLocation(newPiecesLocalition);
+    }, [game])
 
     function clearSquares() {
         setSquaresStyles({});
@@ -101,7 +125,7 @@ function ChessComponent(data) {
     }
 
     return (
-        <div>
+        <div className='container_chessboard'>
             <div className={ piecesShow ? 'chessgame_normal' : 'chessgame_blind' }>
                 <Chessboard
                     position={game.fen()}
@@ -127,6 +151,15 @@ function ChessComponent(data) {
                     customSquareStyles={squaresStyles}
                     customPieces={blindPieces}
                 />
+            </div>
+            <div className='pieces_location'>
+                {piecesLocation.map(pieceLocation => {
+                    return (
+                    <div className='piece_location'>
+                        <p>{pieceLocation.square}</p>
+                        <img src={pieceLocation.img} alt='piece'/>
+                    </div>)
+                })}
             </div>
         </div>
     )
