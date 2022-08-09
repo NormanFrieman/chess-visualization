@@ -1,9 +1,10 @@
 import PublicRoutes from "./public";
 import PrivateRoutes from "./private";
+import './index.css';
 
 function RoutesConfig() {
     return (
-        <div>
+        <div className="main_content">
             <PublicRoutes/>
             <PrivateRoutes/>
         </div>
