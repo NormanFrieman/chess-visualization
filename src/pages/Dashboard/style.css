@@ -17,23 +17,3 @@
     align-items: center;
     justify-content: center;
 }
-
-.btn_display_pieces {
-    background-color: transparent;
-    border-color: #FFFFFF;
-    border-style: solid;
-    border-radius: 12px;
-
-    padding: 8px 16px;
-    cursor: pointer;
-    margin: 20px;
-}
-
-.btn_display_pieces .img_eye{
-    width: 40px;
-    height: 40px;
-}
-
-.btn_display_pieces .img_eye_off{
-    display: none;
-}

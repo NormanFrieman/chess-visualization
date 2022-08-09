@@ -1,22 +1,16 @@
 import ChessComponent from "../../components/Chess";
-import { Eye, EyeOff } from 'react-feather';
 import './style.css';
-import { useState } from "react";
+import exerc1 from '../../assets/exerc/exerc_1.js';
 
 function Dashboard() {
-    const [showPieces, setShowPieces] = useState(true);
-    const fen = '8/8/8/p7/P2k4/4p3/4K3/8 w - - 0 2';
+    const fen = exerc1[1].split('"')[1];
 
     return (
         <div className="container">
             <div className="chessboard">
                 <div className="chessgame">
-                    <ChessComponent fen={fen} showPieces={showPieces}/>
+                    <ChessComponent fen={fen} answer={exerc1[2]}/>
                 </div>
-                <button className="btn_display_pieces" onClick={() => setShowPieces(!showPieces)}>
-                    <Eye className={ showPieces ? 'img_eye_off' : 'img_eye' } color="#FFFFFF"/>
-                    <EyeOff className={ showPieces ? 'img_eye' : 'img_eye_off' } color="#FFFFFF"/>
-                </button>
             </div>
         </div>
     )
