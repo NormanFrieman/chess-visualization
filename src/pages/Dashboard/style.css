@@ -1,6 +1,15 @@
 .container {
-    background-color: rgb(22, 21, 18);
     width: 100%;
+
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.container .chessboard {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .chessgame {
@@ -11,10 +20,13 @@
 
 .btn_display_pieces {
     background-color: transparent;
-    border-color: transparent;
-    
-    padding: 8px 14px;
+    border-color: #FFFFFF;
+    border-style: solid;
+    border-radius: 12px;
+
+    padding: 8px 16px;
     cursor: pointer;
+    margin: 20px;
 }
 
 .btn_display_pieces .img_eye{
