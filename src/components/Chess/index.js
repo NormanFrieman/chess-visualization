@@ -1,6 +1,7 @@
 import { Chessboard } from 'react-chessboard';
 import { Chess } from 'chess.js';
 import { useEffect, useState } from 'react';
+import { Eye, EyeOff } from 'react-feather';
 import useSound from 'use-sound';
 import move_sound from '../../assets/move-sound.mp3';
 
@@ -36,19 +37,16 @@ function ChessComponent(data) {
     const [game, setGame] = useState(new Chess(data.fen));
     const [squaresStyles, setSquaresStyles] = useState({});
     const [moveSound] = useSound(move_sound);
+    const [history, setHistory] = useState('');
+    const [quantMoves, setQuantMoves] = useState(0);
 
-    const [piecesShow, setPiecesShow] = useState(true);
+    const [result, setResult] = useState('');
+    const [attempt, setAttempt] = useState(true);
+
+    const [showPieces, setShowPieces] = useState(false);
     
     const [piecesLocation, setPiecesLocation] = useState([]);
 
-    // Define se deve exibir ou não as peças no tabuleiro
-    useEffect(() => {
-        if(data.showPieces){
-            setPiecesShow(true);
-        }else{
-            setPiecesShow(false);
-        }
-    }, [game, piecesShow, data]);
 
     // Salva a posição das peças
     useEffect(() => {
@@ -83,20 +81,69 @@ function ChessComponent(data) {
         })
     }
 
+    function checkMove(sourceSquare, targetSquare){
+        const answer = data.answer.split(' ');
+
+        const auxGame = new Chess(game.fen());
+        auxGame.move({
+            from: sourceSquare,
+            to: targetSquare,
+            promotion: 'q'
+        });
+
+        if(answer[quantMoves] !== auxGame.history()[0]){
+            setAttempt(false);
+            setResult('Failed');            
+            return false;
+        }
+        
+        return true;
+    }
+
+    function nextMove(){
+        const answer = data.answer.split(' ');
+        const nextEnemyMove = answer[quantMoves + 1];
+        if(!nextEnemyMove && attempt){
+            setResult('Correct');
+            return;
+        }
+
+        game.move(nextEnemyMove);
+        setQuantMoves(quantMoves + 2);
+        updateHistory();
+    }
+
+    function updateHistory(){
+        let historyG = '';
+        const historyGame = game.history();
+        historyGame.forEach(hist => {
+            historyG += hist + ' ';
+        })
+        setHistory(historyG);
+    }
+
     function onDrop(sourceSquare, targetSquare) {
         let move = null;
         safeMove(game => {
-            move = game.move({
-                from: sourceSquare,
-                to: targetSquare,
-                promotion: 'q'
-            });
+            const check = checkMove(sourceSquare, targetSquare);
+            if (check){
+                move = game.move({
+                    from: sourceSquare,
+                    to: targetSquare,
+                    promotion: 'q'
+                });
+            }
         })
+
         if(move === null)
             return false;
         
+        updateHistory();
+
         moveSound();
         clearSquares();
+
+        nextMove();
         return true;
     }
 
@@ -126,40 +173,54 @@ function ChessComponent(data) {
 
     return (
         <div className='container_chessboard'>
-            <div className={ piecesShow ? 'chessgame_normal' : 'chessgame_blind' }>
-                <Chessboard
-                    position={game.fen()}
-                    areArrowsAllowed={false}
-                    onPieceDrop={onDrop}
-                    showErrors={'console'}
-                    useAnimation={true}
-                    onSquareClick={squareClick}
-                    onPieceDragBegin={pieceDragBegin}
-                    customSquareStyles={squaresStyles}
-                    customPieces={normalPieces}
-                />
+            <div className='container_chessboard_chessgame'>
+                <div className={ showPieces ? 'chessgame_normal' : 'chessgame_blind' }>
+                    <Chessboard
+                        position={game.fen()}
+                        areArrowsAllowed={false}
+                        onPieceDrop={onDrop}
+                        showErrors={'console'}
+                        useAnimation={true}
+                        onSquareClick={squareClick}
+                        onPieceDragBegin={pieceDragBegin}
+                        customSquareStyles={squaresStyles}
+                        customPieces={normalPieces}
+                    />
+                </div>
+                <div className={ showPieces ? 'chessgame_blind' : 'chessgame_normal' }>
+                    <Chessboard
+                        position={game.fen()}
+                        areArrowsAllowed={false}
+                        onPieceDrop={onDrop}
+                        showErrors={'console'}
+                        useAnimation={true}
+                        onSquareClick={squareClick}
+                        onPieceDragBegin={pieceDragBegin}
+                        customSquareStyles={squaresStyles}
+                        customPieces={blindPieces}
+                    />
+                </div>
+                <button className="btn_display_pieces" onClick={() => setShowPieces(!showPieces)}>
+                    <Eye className={ showPieces ? 'img_eye_off' : 'img_eye' } color="#FFFFFF"/>
+                    <EyeOff className={ showPieces ? 'img_eye' : 'img_eye_off' } color="#FFFFFF"/>
+                </button>
             </div>
-            <div className={ piecesShow ? 'chessgame_blind' : 'chessgame_normal' }>
-                <Chessboard
-                    position={game.fen()}
-                    areArrowsAllowed={false}
-                    onPieceDrop={onDrop}
-                    showErrors={'console'}
-                    useAnimation={true}
-                    onSquareClick={squareClick}
-                    onPieceDragBegin={pieceDragBegin}
-                    customSquareStyles={squaresStyles}
-                    customPieces={blindPieces}
-                />
-            </div>
-            <div className='pieces_location'>
-                {piecesLocation.map(pieceLocation => {
-                    return (
-                    <div className='piece_location'>
-                        <p>{pieceLocation.square}</p>
-                        <img src={pieceLocation.img} alt='piece'/>
-                    </div>)
-                })}
+            <div>
+                <div className="chessgame_history">
+                    <p>{history}</p>
+                </div>
+                <div className={ showPieces ? 'pieces_location off' : 'pieces_location' }>
+                    {piecesLocation.map(pieceLocation => {
+                        return (
+                        <div key={pieceLocation.type + pieceLocation.square} className='piece_location'>
+                            <p>{pieceLocation.square}</p>
+                            <img className='img_no_piece' src={pieceLocation.img} alt='piece'/>
+                        </div>)
+                    })}
+                </div>
+                <div className="chessgame_history">
+                    {result}
+                </div>
             </div>
         </div>
     )

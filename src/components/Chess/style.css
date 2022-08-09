@@ -5,6 +5,13 @@
     align-items: center;
 }
 
+.container_chessboard_chessgame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .container_chessboard .chessgame_normal {
     display: block;
 }
@@ -22,6 +29,19 @@
 
     gap: 2px;
 
+    max-width: 280px;
+    visibility: visible;
+    margin-bottom: calc(40px + 63px);
+}
+
+.container_chessboard .pieces_location.off{
+    visibility: hidden;
+}
+
+.chessgame_history{
+    color: #FFFFFF;
+    font-size: 20px;
+    margin: 20px;
     max-width: 280px;
 }
 
@@ -42,4 +62,29 @@
     margin: 8px;
     font-size: 20px;
     color: #fff;
+}
+
+.btn_display_pieces {
+    background-color: transparent;
+    border-color: #FFFFFF;
+    border-style: solid;
+    border-radius: 12px;
+
+    padding: 8px 16px;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.btn_display_pieces .img_eye{
+    width: 40px;
+    height: 40px;
+}
+
+.btn_display_pieces .img_eye_off{
+    display: none;
+}
+
+.img_no_piece{
+    width: 70px;
+    height: 70px;
 }
