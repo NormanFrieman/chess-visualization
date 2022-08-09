@@ -4,6 +4,13 @@ header {
     padding: 16px;
 }
 
+.header{
+    width: 100%;
+
+    max-width: 960px;
+    margin: 0 auto;
+}
+
 h1 {
     font-size: 22px;
 }

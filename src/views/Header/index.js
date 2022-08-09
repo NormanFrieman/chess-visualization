@@ -13,7 +13,9 @@ function Header() {
     
     return (
         <header>
+          <div className="header">
             <h1 className="font-face-ns">chess visualization</h1>
+          </div>
         </header>
     )
 }
