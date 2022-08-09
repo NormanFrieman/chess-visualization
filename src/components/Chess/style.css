@@ -45,6 +45,63 @@
     max-width: 280px;
 }
 
+.chessgame_result_success{
+    height: 32px;
+
+    background-color: #dff2bf;
+    color: #315e46;
+
+    font-size: 24px;
+
+    margin: 28px;
+    max-width: 280px;
+    padding: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    
+    border-radius: 4px;
+}
+
+.chessgame_result_failed{
+    height: 32px;
+
+    background-color: #ffbaba;
+    color: #d8000c;
+
+    font-size: 24px;
+
+    margin: 28px;
+    max-width: 280px;
+    padding: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    
+    border-radius: 4px;
+}
+
+.chessgame_enemy_move{
+    height: 32px;
+
+    background-color: #bde5f8;
+    color: #0052a7;
+
+    font-size: 18px;
+
+    margin: 28px;
+    max-width: 280px;
+    padding: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    
+    border-radius: 4px;
+}
+
 .container_chessboard .piece_location{
     background-color: #42403a;
 

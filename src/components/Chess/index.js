@@ -42,6 +42,7 @@ function ChessComponent(data) {
 
     const [result, setResult] = useState('');
     const [attempt, setAttempt] = useState(true);
+    const [enemyMove, setEnemyMove] = useState(null);
 
     const [showPieces, setShowPieces] = useState(false);
     
@@ -93,7 +94,7 @@ function ChessComponent(data) {
 
         if(answer[quantMoves] !== auxGame.history()[0]){
             setAttempt(false);
-            setResult('Failed');            
+            setResult('Falhou');            
             return false;
         }
         
@@ -104,11 +105,13 @@ function ChessComponent(data) {
         const answer = data.answer.split(' ');
         const nextEnemyMove = answer[quantMoves + 1];
         if(!nextEnemyMove && attempt){
-            setResult('Correct');
+            setResult('Correto');
+            setEnemyMove(null);
             return;
         }
 
         game.move(nextEnemyMove);
+        setEnemyMove(nextEnemyMove);
         setQuantMoves(quantMoves + 2);
         updateHistory();
     }
@@ -206,8 +209,11 @@ function ChessComponent(data) {
                 </button>
             </div>
             <div>
-                <div className="chessgame_history">
-                    <p>{history}</p>
+                <div style={{display: !result ? 'none' : 'flex' }} className={result && attempt ? 'chessgame_result_success' : 'chessgame_result_failed'}>
+                    {result}
+                </div>
+                <div style={{display: !enemyMove ? 'none' : 'flex' }} className="chessgame_enemy_move">
+                    <p>{game.turn() === 'w' ? 'Pretas jogaram ' : 'Brancas jogaram '}<b>{' ' + enemyMove}</b></p>
                 </div>
                 <div className={ showPieces ? 'pieces_location off' : 'pieces_location' }>
                     {piecesLocation.map(pieceLocation => {
@@ -218,8 +224,8 @@ function ChessComponent(data) {
                         </div>)
                     })}
                 </div>
-                <div className="chessgame_history">
-                    {result}
+                <div style={{display: !history ? 'none' : 'flex' }} className="chessgame_history">
+                    <p>História: {history}</p>
                 </div>
             </div>
         </div>
