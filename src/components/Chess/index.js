@@ -44,12 +44,14 @@ function ChessComponent(input) {
 
     const [result, setResult] = useState('');
     const [attempt, setAttempt] = useState(true);
-    const [enemyMove, setEnemyMove] = useState(null);
+    const [enemyMove, setEnemyMove] = useState();
 
     const [showPieces, setShowPieces] = useState(false);
     
     const [piecesLocation, setPiecesLocation] = useState([]);
     const [finished, setFinished] = useState(false);
+    const [endPuzzle, setEndPuzzle] = useState(false);
+    const [isEndList, setIsEndList] = useState(false);
 
     useEffect(() => {
         const auxGame = new Chess(input.fen);
@@ -67,6 +69,10 @@ function ChessComponent(input) {
         setShowPieces(false);
         setPiecesLocation([]);
         setFinished(false);
+        setEndPuzzle(false);
+        setIsEndList(input.isEndList);
+
+        console.log(input.isEndList);
     }, [input]);
 
     // Salva a posição das peças
@@ -112,8 +118,9 @@ function ChessComponent(input) {
             promotion: 'q'
         });
 
-        if(answer[quantMoves] !== auxGame.history()[0] && !finished){
-            setAttempt(false);
+        if(answer[quantMoves] !== auxGame.history()[0]){
+            if (!finished)
+                setAttempt(false);
             setResult('Falhou');
             setFinished(true);
             return false;
@@ -129,6 +136,7 @@ function ChessComponent(input) {
             setResult('Correto');
             setEnemyMove(null);
             setFinished(true);
+            setEndPuzzle(true);
             return;
         }
 
@@ -240,7 +248,7 @@ function ChessComponent(input) {
                         <option value="4">4 PEÇAS</option>
                         <option value="5">5 PEÇAS</option>
                     </select>
-                    <p className='chessgame_text'>{game.turn() === 'w' ? 'Brancas jogam' : 'Pretas jogam'}</p>
+                    <p style={{display: !endPuzzle ? 'block' : 'none' }} className='chessgame_text'>{game.turn() === 'w' ? 'Brancas jogam' : 'Pretas jogam'}</p>
                 </div>
                 <div className={ showPieces ? 'pieces_location off' : 'pieces_location' }>
                     {piecesLocation.map(pieceLocation => {
@@ -260,8 +268,11 @@ function ChessComponent(input) {
                 <div style={{display: !result ? 'none' : 'flex' }} className={result && attempt ? 'chessgame_result_success' : 'chessgame_result_failed'}>
                     {result}
                 </div>
-                <div style={{display: !result ? 'none' : 'flex' }} className="chessgame_btn">
+                <div style={{display: result && !isEndList ? 'flex' : 'none' }} className="chessgame_btn">
                     <button onClick={event => data.nextPuzzle()}>PRÓXIMO DESAFIO</button>
+                </div>
+                <div style={{display: result && isEndList ? 'flex' : 'none' }} className="chessgame_end_list">
+                    <div><p>NÃO HÁ MAIS EXERCÍCIOS NESSA CATEGORIA</p></div>
                 </div>
             </div>
         </div>
