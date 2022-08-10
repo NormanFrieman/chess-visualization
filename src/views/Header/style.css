@@ -1,0 +1,22 @@
+header {
+    background-color: rgb(43, 40, 34);
+    color: #999;
+    padding: 16px;
+}
+
+.header{
+    width: 100%;
+
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.font-face-ns {
+    font-family: 'Noto Sans', 'Times New Roman';
+    /* font-family: 'NotoSans', Arial; */
+}

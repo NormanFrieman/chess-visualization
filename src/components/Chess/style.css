@@ -1,0 +1,237 @@
+.container_chessboard {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.container_chessboard_chessgame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.container_chessboard .chessgame_normal {
+    display: block;
+}
+
+.container_chessboard .chessgame_blind{
+    display: none;
+}
+
+.container_chessboard .pieces_location{
+    margin: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 2px;
+
+    max-width: 280px;
+    visibility: visible;
+    margin-bottom: calc(40px + 63px);
+}
+
+.container_chessboard .pieces_location.off{
+    visibility: hidden;
+}
+
+.chessgame_history{
+    color: #FFFFFF;
+    font-size: 20px;
+    margin: 20px;
+    max-width: 280px;
+}
+
+.chessgame_result_success{
+    height: 32px;
+
+    background-color: #DAFFDE;
+    color: #00890E;
+
+    font-weight: 600;
+    font-size: 18px;
+
+    margin: 28px;
+    height: 40px;
+    width: 120px;
+    max-width: 280px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    border-radius: 4px;
+}
+
+.chessgame_result_failed{
+    height: 32px;
+
+    background-color: #FFE3E1;
+    color: #BD1A10;
+
+    font-weight: 600;
+    font-size: 18px;
+
+    margin: 28px;
+    height: 40px;
+    width: 120px;
+    max-width: 280px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    border-color: #BD1A10;
+    border-radius: 4px;
+}
+
+.chessgame_enemy_move{
+    height: 32px;
+
+    background-color: #bde5f8;
+    color: #0052a7;
+
+    font-size: 18px;
+
+    margin: 28px;
+    max-width: 280px;
+    padding: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    
+    border-radius: 4px;
+}
+
+.container_chessboard .piece_location{
+    background-color: #42403a;
+
+    display: flex;
+    justify-content: space-between;
+
+    align-items: center;
+    border-radius: 8px;
+    padding: 2px 8px;
+
+    width: 98px;
+
+    margin: 4px;
+}
+
+.container_chessboard .piece_location p{
+    margin: 8px;
+    font-size: 20px;
+    color: #fff;
+}
+
+.chessgame_set_puzzle{
+    margin: 20px;
+    flex-wrap: wrap;
+
+    gap: 2px;
+
+    max-width: 280px;
+}
+
+.chessgame_set_puzzle .chessgame_text{
+    color: #FFFFFF;
+    margin-bottom: 6px;
+}
+
+.chessgame_set_puzzle .chessgame_select{
+    padding: 12px 12px;
+    width: 240px;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #000000;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.chessgame_btn {
+    margin: 24px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 2px;
+
+    max-width: 280px;
+    visibility: visible;
+}
+
+.chessgame_btn button {
+    background-color: #0055F9;
+    color: #FFFFFF;
+
+    font-weight: 600;
+    font-size: 16px;
+
+    padding: 20px 32px;
+    width: 240px;
+
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.chessgame_end_list {
+    margin: 24px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 2px;
+
+    max-width: 280px;
+    visibility: visible;
+}
+
+.chessgame_end_list div {
+    background-color: #42403a;
+    color: #FFFFFF;
+
+    font-weight: 600;
+    font-size: 14px;
+
+    padding: 20px 32px;
+    width: 180px;
+
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.btn_display_pieces {
+    background-color: transparent;
+    border-color: #FFFFFF;
+    border-style: solid;
+    border-radius: 12px;
+
+    padding: 8px 16px;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.btn_display_pieces .img_eye{
+    width: 40px;
+    height: 40px;
+}
+
+.btn_display_pieces .img_eye_off{
+    display: none;
+}
+
+.img_no_piece{
+    width: 50px;
+    height: 50px;
+}
