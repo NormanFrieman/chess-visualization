@@ -20,7 +20,7 @@ npm install
 npm run dev
 ```
 
-## Meta
+## Contato
 
 Ezequiel Demetras Silva – [ezequieldemetras](https://www.linkedin.com/in/ezequiel-demetras/) – ezequiel.silva@edu.ufes.br
 
