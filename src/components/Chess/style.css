@@ -180,6 +180,37 @@
     cursor: pointer;
 }
 
+.chessgame_end_list {
+    margin: 24px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 2px;
+
+    max-width: 280px;
+    visibility: visible;
+}
+
+.chessgame_end_list div {
+    background-color: #42403a;
+    color: #FFFFFF;
+
+    font-weight: 600;
+    font-size: 14px;
+
+    padding: 20px 32px;
+    width: 180px;
+
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
 .btn_display_pieces {
     background-color: transparent;
     border-color: #FFFFFF;
