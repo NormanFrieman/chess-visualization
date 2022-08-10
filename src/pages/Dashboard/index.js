@@ -14,6 +14,7 @@ function Dashboard() {
     const [puzzles, setPuzzles] = useState(getPuzzles(level));
     const [fen, setFen] = useState(getFen(puzzles[exNum]));
     const [answer, setAnswer] = useState(getAnswer(puzzles[exNum]));
+    const [isEndList, setIsEndList] = useState(false);
 
     function getFen(puzzle){
         return puzzle[1].split('"')[1];
@@ -31,6 +32,9 @@ function Dashboard() {
         setFen(getFen(puzzle));
         setAnswer(getAnswer(puzzle));
 
+        if(exNum + 1 >= puzzles.length - 1)
+            setIsEndList(true);
+
         setExNum(exNum + 1);
     }
 
@@ -47,13 +51,14 @@ function Dashboard() {
         const puzzle = auxPuzzles[0]
         setFen(getFen(puzzle));
         setAnswer(getAnswer(puzzle));
+        setIsEndList(false);
     }
 
     return (
         <div className="container">
             <div className="chessboard">
                 <div className="chessgame">
-                    <ChessComponent nextPuzzle={nextPuzzle} setLevel={setNextLevel} fen={fen} answer={answer}/>
+                    <ChessComponent nextPuzzle={nextPuzzle} setLevel={setNextLevel} fen={fen} answer={answer} isEndList={isEndList}/>
                 </div>
             </div>
         </div>
