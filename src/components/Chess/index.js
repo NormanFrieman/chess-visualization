@@ -33,12 +33,14 @@ const BlindPieces = () => {
 const normalPieces = {};
 const blindPieces = BlindPieces();
 
-function ChessComponent(data) {
-    const [game, setGame] = useState(new Chess(data.fen));
+function ChessComponent(input) {
+    const [data, setData] = useState(input);
+    const [game, setGame] = useState(new Chess(input.fen));
     const [squaresStyles, setSquaresStyles] = useState({});
     const [moveSound] = useSound(move_sound);
     const [history, setHistory] = useState('');
     const [quantMoves, setQuantMoves] = useState(0);
+    const [boardOrientation, setBoardOrientation] = useState();
 
     const [result, setResult] = useState('');
     const [attempt, setAttempt] = useState(true);
@@ -47,7 +49,25 @@ function ChessComponent(data) {
     const [showPieces, setShowPieces] = useState(false);
     
     const [piecesLocation, setPiecesLocation] = useState([]);
+    const [finished, setFinished] = useState(false);
 
+    useEffect(() => {
+        const auxGame = new Chess(input.fen);
+        const auxBoardOrientation = auxGame.turn() === 'w' ? 'white' : 'black';
+        
+        setData(input);
+        setGame(auxGame);
+        setSquaresStyles({});
+        setHistory();
+        setQuantMoves(0);
+        setBoardOrientation(auxBoardOrientation);
+        setResult('');
+        setAttempt(true);
+        setEnemyMove(null);
+        setShowPieces(false);
+        setPiecesLocation([]);
+        setFinished(false);
+    }, [input]);
 
     // Salva a posição das peças
     useEffect(() => {
@@ -92,9 +112,10 @@ function ChessComponent(data) {
             promotion: 'q'
         });
 
-        if(answer[quantMoves] !== auxGame.history()[0]){
+        if(answer[quantMoves] !== auxGame.history()[0] && !finished){
             setAttempt(false);
-            setResult('Falhou');            
+            setResult('Falhou');
+            setFinished(true);
             return false;
         }
         
@@ -107,6 +128,7 @@ function ChessComponent(data) {
         if(!nextEnemyMove && attempt){
             setResult('Correto');
             setEnemyMove(null);
+            setFinished(true);
             return;
         }
 
@@ -179,6 +201,7 @@ function ChessComponent(data) {
             <div className='container_chessboard_chessgame'>
                 <div className={ showPieces ? 'chessgame_normal' : 'chessgame_blind' }>
                     <Chessboard
+                        boardOrientation={boardOrientation}
                         position={game.fen()}
                         areArrowsAllowed={false}
                         onPieceDrop={onDrop}
@@ -192,6 +215,7 @@ function ChessComponent(data) {
                 </div>
                 <div className={ showPieces ? 'chessgame_blind' : 'chessgame_normal' }>
                     <Chessboard
+                        boardOrientation={boardOrientation}
                         position={game.fen()}
                         areArrowsAllowed={false}
                         onPieceDrop={onDrop}
@@ -209,11 +233,14 @@ function ChessComponent(data) {
                 </button>
             </div>
             <div>
-                <div style={{display: !result ? 'none' : 'flex' }} className={result && attempt ? 'chessgame_result_success' : 'chessgame_result_failed'}>
-                    {result}
-                </div>
-                <div style={{display: !enemyMove ? 'none' : 'flex' }} className="chessgame_enemy_move">
-                    <p>{game.turn() === 'w' ? 'Pretas jogaram ' : 'Brancas jogaram '}<b>{' ' + enemyMove}</b></p>
+                <div className='chessgame_set_puzzle'>
+                    <p className='chessgame_text'>Determine a quantidade de peças:</p>
+                    <select className='chessgame_select' name="level" onChange={event => data.setLevel(event)}>
+                        <option value="3">3 PEÇAS</option>
+                        <option value="4">4 PEÇAS</option>
+                        <option value="5">5 PEÇAS</option>
+                    </select>
+                    <p className='chessgame_text'>{game.turn() === 'w' ? 'Brancas jogam' : 'Pretas jogam'}</p>
                 </div>
                 <div className={ showPieces ? 'pieces_location off' : 'pieces_location' }>
                     {piecesLocation.map(pieceLocation => {
@@ -226,6 +253,15 @@ function ChessComponent(data) {
                 </div>
                 <div style={{display: !history ? 'none' : 'flex' }} className="chessgame_history">
                     <p>História: {history}</p>
+                </div>
+                <div style={{display: !enemyMove ? 'none' : 'flex' }} className="chessgame_enemy_move">
+                    <p>{game.turn() === 'w' ? 'Pretas jogaram ' : 'Brancas jogaram '}<b>{' ' + enemyMove}</b></p>
+                </div>
+                <div style={{display: !result ? 'none' : 'flex' }} className={result && attempt ? 'chessgame_result_success' : 'chessgame_result_failed'}>
+                    {result}
+                </div>
+                <div style={{display: !result ? 'none' : 'flex' }} className="chessgame_btn">
+                    <button onClick={event => data.nextPuzzle()}>PRÓXIMO DESAFIO</button>
                 </div>
             </div>
         </div>
