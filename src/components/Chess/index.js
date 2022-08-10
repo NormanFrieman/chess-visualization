@@ -34,6 +34,7 @@ const normalPieces = {};
 const blindPieces = BlindPieces();
 
 function ChessComponent(input) {
+    const [loading, setLoading] = useState(true);
     const [data, setData] = useState(input);
     const [game, setGame] = useState(new Chess(input.fen));
     const [squaresStyles, setSquaresStyles] = useState({});
@@ -52,8 +53,10 @@ function ChessComponent(input) {
     const [finished, setFinished] = useState(false);
     const [endPuzzle, setEndPuzzle] = useState(false);
     const [isEndList, setIsEndList] = useState(false);
+    const [currentLevel, setCurrentLevel] = useState();
 
     useEffect(() => {
+        setLoading(true)
         const auxGame = new Chess(input.fen);
         const auxBoardOrientation = auxGame.turn() === 'w' ? 'white' : 'black';
         
@@ -71,8 +74,12 @@ function ChessComponent(input) {
         setFinished(false);
         setEndPuzzle(false);
         setIsEndList(input.isEndList);
+        setCurrentLevel(input.currentLevel);
 
-        console.log(input.isEndList);
+        setTimeout(() => {
+            setLoading(false);
+        }, 0.05)
+
     }, [input]);
 
     // Salva a posição das peças
@@ -205,7 +212,7 @@ function ChessComponent(input) {
     }
 
     return (
-        <div className='container_chessboard'>
+        <div className='container_chessboard' style={{display: !loading ? 'flex' : 'none'}}>
             <div className='container_chessboard_chessgame'>
                 <div className={ showPieces ? 'chessgame_normal' : 'chessgame_blind' }>
                     <Chessboard
@@ -243,7 +250,7 @@ function ChessComponent(input) {
             <div>
                 <div className='chessgame_set_puzzle'>
                     <p className='chessgame_text'>Determine a quantidade de peças:</p>
-                    <select className='chessgame_select' name="level" onChange={event => data.setLevel(event)}>
+                    <select value={currentLevel} className='chessgame_select' name="level" onChange={event => data.setLevel(event)}>
                         <option value="3">3 PEÇAS</option>
                         <option value="4">4 PEÇAS</option>
                         <option value="5">5 PEÇAS</option>
