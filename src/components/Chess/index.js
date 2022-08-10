@@ -34,6 +34,7 @@ const normalPieces = {};
 const blindPieces = BlindPieces();
 
 function ChessComponent(input) {
+    const [loading, setLoading] = useState(true);
     const [data, setData] = useState(input);
     const [game, setGame] = useState(new Chess(input.fen));
     const [squaresStyles, setSquaresStyles] = useState({});
@@ -55,6 +56,7 @@ function ChessComponent(input) {
     const [currentLevel, setCurrentLevel] = useState();
 
     useEffect(() => {
+        setLoading(true)
         const auxGame = new Chess(input.fen);
         const auxBoardOrientation = auxGame.turn() === 'w' ? 'white' : 'black';
         
@@ -73,6 +75,10 @@ function ChessComponent(input) {
         setEndPuzzle(false);
         setIsEndList(input.isEndList);
         setCurrentLevel(input.currentLevel);
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 0.05)
 
     }, [input]);
 
@@ -206,7 +212,7 @@ function ChessComponent(input) {
     }
 
     return (
-        <div className='container_chessboard'>
+        <div className='container_chessboard' style={{display: !loading ? 'flex' : 'none'}}>
             <div className='container_chessboard_chessgame'>
                 <div className={ showPieces ? 'chessgame_normal' : 'chessgame_blind' }>
                     <Chessboard
