@@ -54,7 +54,7 @@ function ChessComponent(input) {
     const [endPuzzle, setEndPuzzle] = useState(false);
     const [isEndList, setIsEndList] = useState(false);
     const [currentLevel, setCurrentLevel] = useState();
-
+    
     useEffect(() => {
         setLoading(true)
         const auxGame = new Chess(input.fen);
@@ -212,74 +212,76 @@ function ChessComponent(input) {
     }
 
     return (
-        <div className='container_chessboard' style={{display: !loading ? 'flex' : 'none'}}>
-            <div className='container_chessboard_chessgame'>
-                <div className={ showPieces ? 'chessgame_normal' : 'chessgame_blind' }>
-                    <Chessboard
-                        boardOrientation={boardOrientation}
-                        position={game.fen()}
-                        areArrowsAllowed={false}
-                        onPieceDrop={onDrop}
-                        showErrors={'console'}
-                        useAnimation={true}
-                        onSquareClick={squareClick}
-                        onPieceDragBegin={pieceDragBegin}
-                        customSquareStyles={squaresStyles}
-                        customPieces={normalPieces}
-                    />
+        <div className='container_chess'>
+            <div className='container_chessboard' style={{display: !loading ? 'flex' : 'none'}}>
+                <div className='container_chessboard_chessgame'>
+                    <div className={ showPieces ? 'chessgame_normal' : 'chessgame_blind' }>
+                        <Chessboard
+                            boardOrientation={boardOrientation}
+                            position={game.fen()}
+                            areArrowsAllowed={false}
+                            onPieceDrop={onDrop}
+                            showErrors={'console'}
+                            useAnimation={true}
+                            onSquareClick={squareClick}
+                            onPieceDragBegin={pieceDragBegin}
+                            customSquareStyles={squaresStyles}
+                            customPieces={normalPieces}
+                        />
+                    </div>
+                    <div className={ showPieces ? 'chessgame_blind' : 'chessgame_normal' }>
+                        <Chessboard
+                            boardOrientation={boardOrientation}
+                            position={game.fen()}
+                            areArrowsAllowed={false}
+                            onPieceDrop={onDrop}
+                            showErrors={'console'}
+                            useAnimation={true}
+                            onSquareClick={squareClick}
+                            onPieceDragBegin={pieceDragBegin}
+                            customSquareStyles={squaresStyles}
+                            customPieces={blindPieces}
+                        />
+                    </div>
+                    <button className="btn_display_pieces" onClick={() => setShowPieces(!showPieces)}>
+                        <Eye className={ showPieces ? 'img_eye_off' : 'img_eye' } color="#FFFFFF"/>
+                        <EyeOff className={ showPieces ? 'img_eye' : 'img_eye_off' } color="#FFFFFF"/>
+                    </button>
                 </div>
-                <div className={ showPieces ? 'chessgame_blind' : 'chessgame_normal' }>
-                    <Chessboard
-                        boardOrientation={boardOrientation}
-                        position={game.fen()}
-                        areArrowsAllowed={false}
-                        onPieceDrop={onDrop}
-                        showErrors={'console'}
-                        useAnimation={true}
-                        onSquareClick={squareClick}
-                        onPieceDragBegin={pieceDragBegin}
-                        customSquareStyles={squaresStyles}
-                        customPieces={blindPieces}
-                    />
-                </div>
-                <button className="btn_display_pieces" onClick={() => setShowPieces(!showPieces)}>
-                    <Eye className={ showPieces ? 'img_eye_off' : 'img_eye' } color="#FFFFFF"/>
-                    <EyeOff className={ showPieces ? 'img_eye' : 'img_eye_off' } color="#FFFFFF"/>
-                </button>
-            </div>
-            <div>
-                <div className='chessgame_set_puzzle'>
-                    <p className='chessgame_text'>Determine a quantidade de peças:</p>
-                    <select value={currentLevel} className='chessgame_select' name="level" onChange={event => data.setLevel(event)}>
-                        <option value="3">3 PEÇAS</option>
-                        <option value="4">4 PEÇAS</option>
-                        <option value="5">5 PEÇAS</option>
-                    </select>
-                    <p style={{display: !endPuzzle ? 'block' : 'none' }} className='chessgame_text'>{game.turn() === 'w' ? 'Brancas jogam' : 'Pretas jogam'}</p>
-                </div>
-                <div className={ showPieces ? 'pieces_location off' : 'pieces_location' }>
-                    {piecesLocation.map(pieceLocation => {
-                        return (
-                        <div key={pieceLocation.type + pieceLocation.square} className='piece_location'>
-                            <p>{pieceLocation.square}</p>
-                            <img className='img_no_piece' src={pieceLocation.img} alt='piece'/>
-                        </div>)
-                    })}
-                </div>
-                <div style={{display: !history ? 'none' : 'flex' }} className="chessgame_history">
-                    <p>História: {history}</p>
-                </div>
-                <div style={{display: !enemyMove ? 'none' : 'flex' }} className="chessgame_enemy_move">
-                    <p>{game.turn() === 'w' ? 'Pretas jogaram ' : 'Brancas jogaram '}<b>{' ' + enemyMove}</b></p>
-                </div>
-                <div style={{display: !result ? 'none' : 'flex' }} className={result && attempt ? 'chessgame_result_success' : 'chessgame_result_failed'}>
-                    {result}
-                </div>
-                <div style={{display: result && !isEndList ? 'flex' : 'none' }} className="chessgame_btn">
-                    <button onClick={event => data.nextPuzzle()}>PRÓXIMO DESAFIO</button>
-                </div>
-                <div style={{display: result && isEndList ? 'flex' : 'none' }} className="chessgame_end_list">
-                    <div><p>NÃO HÁ MAIS EXERCÍCIOS NESSA CATEGORIA</p></div>
+                <div>
+                    <div className='chessgame_set_puzzle'>
+                        <p className='chessgame_text'>Determine a quantidade de peças:</p>
+                        <select value={currentLevel} className='chessgame_select' name="level" onChange={event => data.setLevel(event)}>
+                            <option value="3">3 PEÇAS</option>
+                            <option value="4">4 PEÇAS</option>
+                            <option value="5">5 PEÇAS</option>
+                        </select>
+                        <p style={{display: !endPuzzle ? 'block' : 'none' }} className='chessgame_text'>{game.turn() === 'w' ? 'Brancas jogam' : 'Pretas jogam'}</p>
+                    </div>
+                    <div className={ showPieces ? 'pieces_location off' : 'pieces_location' }>
+                        {piecesLocation.map(pieceLocation => {
+                            return (
+                            <div key={pieceLocation.type + pieceLocation.square} className='piece_location'>
+                                <p>{pieceLocation.square}</p>
+                                <img className='img_no_piece' src={pieceLocation.img} alt='piece'/>
+                            </div>)
+                        })}
+                    </div>
+                    <div style={{display: !history ? 'none' : 'flex' }} className="chessgame_history">
+                        <p>História: {history}</p>
+                    </div>
+                    <div style={{display: !enemyMove ? 'none' : 'flex' }} className="chessgame_enemy_move">
+                        <p>{game.turn() === 'w' ? 'Pretas jogaram ' : 'Brancas jogaram '}<b>{' ' + enemyMove}</b></p>
+                    </div>
+                    <div style={{display: !result ? 'none' : 'flex' }} className={result && attempt ? 'chessgame_result_success' : 'chessgame_result_failed'}>
+                        {result}
+                    </div>
+                    <div style={{display: result && !isEndList ? 'flex' : 'none' }} className="chessgame_btn">
+                        <button onClick={event => data.nextPuzzle()}>PRÓXIMO DESAFIO</button>
+                    </div>
+                    <div style={{display: result && isEndList ? 'flex' : 'none' }} className="chessgame_end_list">
+                        <div><p>NÃO HÁ MAIS EXERCÍCIOS NESSA CATEGORIA</p></div>
+                    </div>
                 </div>
             </div>
         </div>
