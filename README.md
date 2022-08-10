@@ -26,7 +26,7 @@ Ezequiel Demetras Silva – [ezequieldemetras](https://www.linkedin.com/in/ezequ
 
 ## Contribuição
 
-1. Crie um fork (<https://github.com/yourname/yourproject/fork>)
+1. Crie um fork (<https://github.com/NormanFrieman/chess-visualization/fork>)
 2. Crie uma branch para nova feature (`git checkout -b feature/fooBar`)
 3. Faça commit das alterações (`git commit -am 'Add some fooBar'`)
 4. Envie os commits para o git (`git push origin feature/fooBar`)
