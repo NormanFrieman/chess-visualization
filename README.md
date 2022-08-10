@@ -7,7 +7,7 @@ Chess visualization é uma plataforma onde enxadristas de qualquer modalidade po
 
 [Chess Visualization](https://chessvisualization.herokuapp.com/)
 
-## Usage example
+## Exemplo de uso
 
 Com esta plataforma você poderá determinar a quantidade de peças que estarão presentes no tabuleiro, visando diminuir/aumentar a dificuldade do exercício.
 
