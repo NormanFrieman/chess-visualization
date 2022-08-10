@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import ChessComponent from "../../components/Chess";
 import './style.css';
 
@@ -8,7 +9,8 @@ function getPuzzles(level){
 }
 
 function Dashboard() {
-    const [level, setLevel] = useState(3);
+    const location = useLocation();
+    const [level, setLevel] = useState(location.state.level);
     const [exNum, setExNum] = useState(0);
 
     const [puzzles, setPuzzles] = useState(getPuzzles(level));
@@ -58,7 +60,7 @@ function Dashboard() {
         <div className="container">
             <div className="chessboard">
                 <div className="chessgame">
-                    <ChessComponent nextPuzzle={nextPuzzle} setLevel={setNextLevel} fen={fen} answer={answer} isEndList={isEndList}/>
+                    <ChessComponent nextPuzzle={nextPuzzle} setLevel={setNextLevel} currentLevel={level} fen={fen} answer={answer} isEndList={isEndList}/>
                 </div>
             </div>
         </div>

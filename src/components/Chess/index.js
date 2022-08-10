@@ -52,6 +52,7 @@ function ChessComponent(input) {
     const [finished, setFinished] = useState(false);
     const [endPuzzle, setEndPuzzle] = useState(false);
     const [isEndList, setIsEndList] = useState(false);
+    const [currentLevel, setCurrentLevel] = useState();
 
     useEffect(() => {
         const auxGame = new Chess(input.fen);
@@ -71,8 +72,8 @@ function ChessComponent(input) {
         setFinished(false);
         setEndPuzzle(false);
         setIsEndList(input.isEndList);
+        setCurrentLevel(input.currentLevel);
 
-        console.log(input.isEndList);
     }, [input]);
 
     // Salva a posição das peças
@@ -243,7 +244,7 @@ function ChessComponent(input) {
             <div>
                 <div className='chessgame_set_puzzle'>
                     <p className='chessgame_text'>Determine a quantidade de peças:</p>
-                    <select className='chessgame_select' name="level" onChange={event => data.setLevel(event)}>
+                    <select value={currentLevel} className='chessgame_select' name="level" onChange={event => data.setLevel(event)}>
                         <option value="3">3 PEÇAS</option>
                         <option value="4">4 PEÇAS</option>
                         <option value="5">5 PEÇAS</option>
