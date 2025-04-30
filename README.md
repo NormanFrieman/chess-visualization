@@ -20,10 +20,6 @@ npm install
 npm run dev
 ```
 
-## Contato
-
-Ezequiel Demetras Silva – [ezequieldemetras](https://www.linkedin.com/in/ezequiel-demetras/) – ezequiel.silva@edu.ufes.br
-
 ## Contribuição
 
 1. Crie um fork (<https://github.com/NormanFrieman/chess-visualization/fork>)
