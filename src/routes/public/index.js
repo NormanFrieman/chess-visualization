@@ -10,8 +10,8 @@ export default function PublicRoutes(){
             <Header />
             <div className="main_content">
                 <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/dashboard" element={<Dashboard/>}/>
+                    <Route path="/chess-visualization" element={<Home/>}/>
+                    <Route path="/chess-visualization/dashboard" element={<Dashboard/>}/>
                 </Routes>
             </div>
         </BrowserRouter>

@@ -15,15 +15,15 @@ function Home() {
     
     return (
         <div className='container_home'>
-            <Link className='container_home_btn' to='/dashboard' state={{ level: 3 }}>
+            <Link className='container_home_btn' to='/chess-visualization/dashboard' state={{ level: 3 }}>
                 <img src={whitePawn} alt="white pawn"/>
                 <p className='font-face-ns'>3 PEÇAS</p>
             </Link>
-            <Link className='container_home_btn' to='/dashboard' state={{ level: 4 }}>
+            <Link className='container_home_btn' to='/chess-visualization/dashboard' state={{ level: 4 }}>
                 <img src={whitePawn} alt="white pawn"/>
                 <p className='font-face-ns'>4 PEÇAS</p>
             </Link>
-            <Link className='container_home_btn' to='/dashboard' state={{ level: 5 }}>
+            <Link className='container_home_btn' to='/chess-visualization/dashboard' state={{ level: 5 }}>
                 <img src={whitePawn} alt="white pawn"/>
                 <p className='font-face-ns'>5 PEÇAS</p>
             </Link>

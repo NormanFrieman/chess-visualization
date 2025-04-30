@@ -14,7 +14,7 @@ function Header() {
     }, []);
     
     function navigateHome(){
-        navigate('/')
+        navigate('/chess-visualization')
     }
 
     return (
